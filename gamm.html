@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>李秀丽封面制作工具</title>
+    <script src="html2canvas.min.js"></script>
+    <script src="canvas2image.min.js"></script>
+</head>
+<body>
+
+<style>
+    @font-face {
+        font-family: 'NotoSansSC';
+        src: url('./NotoSansSC-Medium.otf');
+    }
+
+    .result {
+        display: none;
+    }
+
+    .cover-box {
+        font-family: 'NotoSansSC', serif;
+        width: 1200px;
+        height: 720px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .text-box {
+        padding: 0 40px 50px 0;
+    }
+
+    .text-box textarea {
+        overflow: auto;
+        /*background-attachment: fixed;*/
+        /*background-repeat: no-repeat;*/
+        border-style: solid;
+        resize: none;
+        background: rgba(0, 0, 0, 0);
+        border-color: rgba(0, 0, 0, 0);
+        width: 294px;
+        height: 175px;
+    }
+
+    #text1 {
+        font-size: 50px;
+    }
+
+    #text2 {
+        font-size: 90px;
+    }
+
+    #text3 {
+        font-size: 40px;
+    }
+
+    #text4 {
+        font-size: 20px;
+        padding: 10px 0 0 0;
+        opacity: 0.7;
+    }
+
+    #text4 img {
+        height: 20px;
+        padding-top: 30px;
+    }
+
+    .panel {
+        padding-top: 100px;
+    }
+
+    /* colorstyle-1 */
+    .colorstyle-1 {
+        background-image: linear-gradient(to bottom right, #ffb800, #ff6c00);
+    }
+
+    .colorstyle-1 #text1, .colorstyle-1 #text3 {
+        color: #fff;
+    }
+
+    .colorstyle-1 #text2 {
+        color: #b60100;
+        font-weight: bolder;
+        text-shadow: 0 0 5px #480100;
+    }
+
+    .colorstyle-1 #text4 {
+        filter: invert(100%);
+    }
+
+    /* colorstyle-2 */
+    .colorstyle-2 {
+        background-image: linear-gradient(to bottom right, #7bd4ff, #408cff);
+    }
+
+    .colorstyle-2 #text1, .colorstyle-2 #text3 {
+        color: #fff;
+    }
+
+    .colorstyle-2 #text2 {
+        color: #ff9400;
+        font-weight: bolder;
+        text-shadow: 0 0 5px #ac4600;
+    }
+
+    .colorstyle-2 #text4 {
+        filter: invert(100%);
+    }
+
+    /* colorstyle-3 */
+    .colorstyle-3 {
+        background-image: linear-gradient(to bottom right, #0097ff, #003eff);
+    }
+
+    .colorstyle-3 #text1, .colorstyle-3 #text3 {
+        color: #fff;
+    }
+
+    .colorstyle-3 #text2 {
+        color: #ffd500;
+        font-weight: bolder;
+        text-shadow: 0 0 5px #f0a300;
+    }
+
+    .colorstyle-3 #text4 {
+        filter: invert(100%);
+    }
+
+    /* colorstyle-4 */
+    .colorstyle-4 {
+        background-image: linear-gradient(to bottom right, #0043ff, #002086);
+    }
+
+    .colorstyle-4 #text1, .colorstyle-4 #text3 {
+        color: #fff;
+    }
+
+    .colorstyle-4 #text2 {
+        color: #ffd500;
+        font-weight: bolder;
+        text-shadow: 0 0 5px #ffffff;
+    }
+
+    .colorstyle-4 #text4 {
+        filter: invert(100%);
+    }
+
+
+</style>
+
+<script>
+
+    function update() {
+        document.querySelector("#text1").innerHTML = document.querySelector("#text1-input").value;
+        document.querySelector("#text2").innerHTML = document.querySelector("#text2-input").value;
+        document.querySelector("#text3").innerHTML = document.querySelector("#text3-input").value;
+        document.querySelector("#cover-box").className = 'cover-box ' + document.querySelector("body > div.panel > label:nth-child(4) > select").value;
+
+    }
+
+    function convert() {
+        document.querySelector("body > div.result").style.display = 'block';
+
+        html2canvas(document.querySelector("#cover-box")).then(canvas => {
+            let _dataURL = canvas.toDataURL("image/png");
+
+            document.querySelector("body > div.result > img").src = _dataURL;
+        });
+    }
+</script>
+
+<h1>李秀丽封面制作工具</h1>
+
+<hr>
+
+<div class="cover-box colorstyle-1" id="cover-box">
+    <div class="text-box">
+        <div id="text1">李秀麗的日语课堂</div>
+        <div id="text2">は　与　が　的区别</div>
+        <div id="text3">教科书上学不到的日语 之 · 003</div>
+    </div>
+</div>
+
+<div class="panel" onkeyup="update()" onmouseup="update()">
+    <label>
+        text1:
+        <input type="text" name="text1" id="text1-input" class="" value="李秀麗的日语课堂">
+    </label>
+    <label>
+        text2:
+        <input type="text" name="text2" id="text2-input" class="" value="は　与　が　的区别">
+    </label>
+    <label>
+        text3:
+        <input type="text" name="text3" id="text3-input" class="" value="教科书上学不到的日语 之 · 003">
+    </label>
+    <label>
+        style:
+        <select>
+            <option value="colorstyle-1">style1</option>
+            <option value="colorstyle-2">style2</option>
+            <option value="colorstyle-3">style3</option>
+            <option value="colorstyle-4">style4</option>
+        </select>
+    </label>
+    <a href="#cover-box" onclick="update();convert();">Generate</a>
+</div>
+
+<div class="result">
+    <hr>
+
+    <h1>
+        Right click this picture to save or copy:
+    </h1>
+    <img src="" alt="右键保存或复制" height="100">
+</div>
+
+</body>
+</html>
